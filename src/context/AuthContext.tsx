@@ -27,6 +27,7 @@ interface AuthContextValue {
   loading: boolean;
   configured: boolean;
   signIn: (input: { mode: "staff" | "student"; identifier: string; password: string }) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   changePassword: (newPassword: string) => Promise<void>;
   refreshProfile: () => Promise<void>;
@@ -113,6 +114,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw new Error("아이디 또는 비밀번호가 올바르지 않습니다.");
   }, []);
 
+  const signInWithGoogle = useCallback(async () => {
+    if (!supabase) throw new Error("Google 로그인은 Supabase 연결 후 사용할 수 있습니다.");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+    if (error) throw new Error("Google 로그인으로 이동하지 못했습니다.");
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!supabase) {
       window.localStorage.removeItem("demo_role");
@@ -144,11 +156,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loading,
       configured: isSupabaseConfigured,
       signIn,
+      signInWithGoogle,
       signOut,
       changePassword,
       refreshProfile,
     }),
-    [changePassword, loading, profile, refreshProfile, session, signIn, signOut],
+    [changePassword, loading, profile, refreshProfile, session, signIn, signInWithGoogle, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

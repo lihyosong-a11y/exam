@@ -54,6 +54,17 @@ insert into public.profiles (id, role, display_name)
 values ('AUTH_USER_UUID', 'teacher', '교사 이름');
 ```
 
+## Google 로그인 설정
+
+교사·관리자는 Google OAuth로 로그인할 수 있습니다. Supabase Dashboard의 Authentication Providers에서 Google을 활성화하고 Google Cloud에서 발급한 Client ID와 Client Secret을 등록합니다.
+
+운영 배포 후에는 Supabase Authentication URL 설정에 앱 주소를 등록합니다.
+
+- Site URL: `https://배포도메인`
+- Redirect URL: `https://배포도메인`
+
+Google로 처음 로그인한 교사도 `profiles`에 `role = 'teacher'` 또는 `role = 'admin'` 행이 있어야 앱에 들어갈 수 있습니다. 아무 Google 계정이나 자동으로 교사 권한을 얻지 않도록 프로필 등록은 관리자가 확인 후 처리합니다.
+
 ## 학생 계정과 임시 비밀번호
 
 학생 계정은 프런트엔드에서 직접 만들지 않습니다. 교사 또는 admin이 `provision-students` Edge Function을 호출하면 서버에서 다음을 처리합니다.

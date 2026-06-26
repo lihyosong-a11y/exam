@@ -1,10 +1,11 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { AppShell } from "./components/AppShell";
 import { RequireRole } from "./components/RequireRole";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { AssessmentBuilderPage } from "./pages/AssessmentBuilderPage";
 import { ClassesPage } from "./pages/ClassesPage";
 import { LoginPage } from "./pages/LoginPage";
+import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { PasswordChangePage } from "./pages/PasswordChangePage";
 import { StudentAssessmentPage } from "./pages/StudentAssessmentPage";
@@ -16,10 +17,10 @@ import { UnauthorizedPage } from "./pages/UnauthorizedPage";
 export function App() {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/change-password" element={<PasswordChangePage />} />
       <Route element={<AppShell />}>
-        <Route index element={<Navigate to="/teacher" replace />} />
         <Route
           path="/teacher"
           element={
