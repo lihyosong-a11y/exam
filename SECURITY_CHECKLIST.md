@@ -1,0 +1,25 @@
+# 보안 점검표
+
+- [ ] 모든 민감한 테이블에 RLS가 활성화되어 있는가
+- [ ] 학생이 다른 학생의 `profiles`, `submissions`, `grading_results`를 조회할 수 없는가
+- [ ] 교사가 다른 교사의 학급, 평가, 학생 제출, 채점 결과를 볼 수 없는가
+- [ ] `question_answer_keys`의 정답·해설·루브릭이 학생에게 노출되지 않는가
+- [ ] service role key가 프런트엔드, Vercel, GitHub에 없는가
+- [ ] `VITE_` 변수에 비밀 키가 없는가
+- [ ] Supabase Edge Function Secrets가 등록되어 있는가
+- [ ] 외부 AI 문항이 교사 승인 후에만 공개되는가
+- [ ] 승인되지 않은 문항이 있는 평가는 공개할 수 없는가
+- [ ] 결과 공개 시점이 `immediate`, `after_close`, `teacher_review`, `feedback_only_immediate` 정책과 일치하는가
+- [ ] 학생별 임시 비밀번호가 서로 다르고 DB 또는 감사 로그에 저장되지 않는가
+- [ ] 첫 로그인 후 비밀번호 변경 전에는 학생 핵심 기능이 차단되는가
+- [ ] Snorkl 링크가 https와 허용 도메인만 통과하는가
+- [ ] Snorkl 링크가 교사 설정 시점에만 학생에게 공개되는가
+- [ ] CSV 및 Excel 다운로드 권한이 teacher 또는 admin으로 제한되는가
+- [ ] 다운로드 작업이 `audit_logs`에 기록되는가
+- [ ] `audit_logs`에 비밀번호, API key, 학생 답안 전문, 외부 AI 원문 응답 전체가 저장되지 않는가
+- [ ] AI 요청에 학생 이름, 로그인 ID, 이메일, 학급명이 포함되지 않는가
+- [ ] CSV 업로드에서 파일 크기, 행 수, 필수 열, 중복 로그인 ID를 검증하는가
+- [ ] 오류 메시지가 SQL, API key, 내부 서버 정보, 다른 사용자 정보를 노출하지 않는가
+- [ ] `npm run build`가 성공하는가
+- [ ] `npm run lint`가 성공하는가
+- [ ] Vercel 배포 후 새로고침 경로가 정상 동작하는가
